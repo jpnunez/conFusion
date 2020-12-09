@@ -3,6 +3,7 @@ import { Leader } from '../shared/leader';
 import { LEADERS} from '../shared/leaders';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { DISHES } from '../shared/dishes';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class LeaderService {
 
   getFeaturedLeader(): Observable<Leader> {
     return of(LEADERS.filter((leader) => leader.featured)[0]).pipe(delay(2000));
+  }
+
+  getDishIds(): Observable<string[] | any> {
+    return of(DISHES.map(dish => dish.id));
   }
 }
 
