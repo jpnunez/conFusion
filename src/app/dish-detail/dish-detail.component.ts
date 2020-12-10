@@ -22,6 +22,7 @@ export class DishDetailComponent implements OnInit {
   dishIds: Array<string>;
   prev: string;
   next: string;
+  dishcopy: Dish;
 
   //Comment Form
   commentForm: FormGroup;
@@ -90,7 +91,7 @@ export class DishDetailComponent implements OnInit {
     this.route.params
         .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
         .subscribe((dish)=> {
-            this.dish= dish;
+            this.dish = dish; this.dishcopy = dish;
             this.setPrevNext(this.dish.id);
         },
           errmess => this.errMess = <any>errmess);
@@ -141,7 +142,12 @@ export class DishDetailComponent implements OnInit {
   onSubmit(){
     this.comment= this.commentForm.value;
     this.comment['date']= (new Date()).toDateString();
-    this.dish.comments.push(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishcopy)
+    .subscribe(dish => {
+      this.dish = dish; this.dishcopy = dish
+    },
+    errmess => {this.dish = null; this.dishcopy = null; this.errMess = <any>errmess})
     console.log(this.dish);
     console.log(this.rating)
     this.commentForm.reset({
@@ -153,4 +159,5 @@ export class DishDetailComponent implements OnInit {
     this.commentFormDirective.resetForm({rating:this.max});
   }
 
+  
 }
