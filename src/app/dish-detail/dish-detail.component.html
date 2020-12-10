@@ -2,7 +2,7 @@
     fxLayout="row"
     fxLayout.sm="column"
     fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center"
+  fxLayoutAlign.gt-md="space-around center"
     fxLayoutGap="10px" 
     fxLayoutGap.xs="0">
 
@@ -12,7 +12,7 @@
             <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
 
         </mat-card-header>
-        <img mat-card-image src={{dish.image}} alt="{{dish.name}}">
+        <img mat-card-image src="{{BaseURL + dish.image}}"alt="{{dish.name}}">
         <mat-card-content>
           <p>
             {{dish.description}}
@@ -46,7 +46,7 @@
     <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
 
     <form novalidate [formGroup]="commentForm" #cForm="ngForm" (ngSubmit)= "onSubmit()">
-      <!-- <p> -->
+      <p>
         <mat-form-field class="full-width">
           <input matInput formControlName="author" placeholder="Author Name" type="text" required>
           <mat-error *ngIf="formErrors.author">
@@ -54,6 +54,7 @@
           </mat-error>
         </mat-form-field>
         <br>Your Ratings
+        <mat-form-field>
           <mat-slider
             class="half-width"
             [disabled]="disabled"
@@ -65,18 +66,22 @@
             [tickInterval]="getSliderTickInterval()"
             value={{rating}}
             formcontrolname="rating"
-            [vertical]="vertical">
+            [vertical]="vertical"
+            (input)="onInputChange($event)">
+            
           </mat-slider>
+
           <mat-error *ngIf="formErrors.rating">
             {{formErrors.rating}}
           </mat-error>
+        </mat-form-field>
         <mat-form-field class="full-width">
           <textarea matInput formControlName="comment" placeholder="Your Comment" rows=12></textarea>
           <mat-error *ngIf="formErrors.comment">
             {{formErrors.comment}}
           </mat-error>
         </mat-form-field>
-      <!-- </p> -->
+      </p>
       <button type="submit" mat-button [class]="commentForm.invalid?'':'background-primary text-floral-white'"
         [style]="commentForm.invalid?'background-color:#9575CD':''"
         [disabled]="commentForm.invalid">Submit</button>
@@ -89,5 +94,15 @@
 <div fxFlex [hidden]="dish">
     <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
   </div>
+
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
+  </div>
+
+
+
+</div>
+
 
 
