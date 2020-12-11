@@ -33,12 +33,12 @@ import { LoginComponent } from './login/login.component';
 import { DishService } from './services/dish.service';
 import { PromotionService} from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { baseURL } from './shared/baseURL';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HighlightDirective } from './directives/highlight.directive';
 
 
 @NgModule({
@@ -52,7 +52,6 @@ import { HighlightDirective } from './directives/highlight.directive';
     AboutComponent,
     ContactComponent,
     LoginComponent,
-    HighlightDirective,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +79,9 @@ import { HighlightDirective } from './directives/highlight.directive';
     DishService,
     PromotionService,
     LeaderService,
+    ProcessHTTPMsgService,
     {provide: 'BaseURL', useValue: baseURL}
+    
   ],
   entryComponents: [
     LoginComponent
